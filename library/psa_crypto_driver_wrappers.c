@@ -332,6 +332,10 @@ psa_status_t psa_driver_wrapper_sign_hash(
                                                              signature_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
+
+        case PSA_KEY_LOCATION_IOTREFERENCE_RX:
+        	return psa_driver_iotreference_rx_sign_hash(attributes, key_buffer, key_buffer_size, alg, hash, hash_length, signature, signature_size, signature_length);
+
         default:
             /* Key is declared with a lifetime not known to us */
             (void)status;
