@@ -30,6 +30,8 @@
 
 #include "mbedtls/platform.h"
 
+#include "psa_builtin_keys.h"
+
 #if defined(MBEDTLS_PSA_CRYPTO_C)
 
 #if defined(MBEDTLS_PSA_CRYPTO_DRIVERS)
@@ -504,6 +506,9 @@ psa_status_t psa_driver_wrapper_get_key_buffer_size(
                     PSA_SUCCESS : PSA_ERROR_NOT_SUPPORTED );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
 
+        case PSA_KEY_LOCATION_IOTREFERENCE_RX:
+        	return psa_driver_iotreference_rx__get_key_buffer_size(attributes, key_buffer_size);
+
         default:
             (void)key_type;
             (void)key_bits;
@@ -813,6 +818,10 @@ psa_status_t psa_driver_wrapper_get_builtin_key(
                         attributes,
                         key_buffer, key_buffer_size, key_buffer_length ) );
 #endif /* PSA_CRYPTO_DRIVER_TEST */
+
+        case PSA_KEY_LOCATION_IOTREFERENCE_RX:
+        	return psa_driver_iotreference_rx_get_builtin_key(slot_number, attributes, key_buffer, key_buffer_size, key_buffer_length);
+
         default:
             (void) slot_number;
             (void) key_buffer;
